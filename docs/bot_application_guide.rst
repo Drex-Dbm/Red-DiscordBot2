@@ -21,27 +21,34 @@ Creating a Bot account is a pretty straightforward process.
     .. image:: /.resources/bot-guide/discord_create_app_button.png
         :alt: The new application button.
 
-4. Give the application a name and click "Create".
+4. Give the application a name, check the box to accept the Terms of Service, and click "Create".
 
     .. image::  /.resources/bot-guide/discord_create_app_form.png
         :alt: The new application form filled in.
 
-5. Create a Bot User by navigating to the "Bot" tab and clicking "Add Bot".
+5. Open the "Overview" category and navigate to the "Installation" tab on the left side of the screen.
 
-    - Click "Yes, do it!" to continue.
+    .. image:: /.resources/bot-guide/discord_installation_tab.png
+        :alt: The installation tab in the application page.
 
-    .. image::  /.resources/bot-guide/discord_create_bot_user.png
-        :alt: The Add Bot button.
-6. If you want others to be able to invite your bot tick the **Public Bot**. Keeping it unticked will prevent others from inviting your bot to their servers and only you will be able to add the bot to servers (provided that you have needed permissions in the server you want to add the bot to).
+6. Uncheck "User Install" and set "Install Link" to "None"
+
+    .. image:: /.resources/bot-guide/discord_installation_options.png
+        :alt: How the Installation options should look like for most people.
+
+7. Navigate to the "Bot" tab on the left side of the screen.
+
+    .. image:: /.resources/bot-guide/discord_bot_tab.png
+        :alt: The bot tab in the application page.
+
+8. If you want others to be able to invite your bot tick the **Public Bot**. Keeping it unticked will prevent others from inviting your bot to their servers and only you will be able to add the bot to servers (provided that you have needed permissions in the server you want to add the bot to).
 
     - Make sure **Require OAuth2 Code Grant** is unchecked.
 
     .. image::  /.resources/bot-guide/discord_bot_user_options.png
         :alt: How the Bot User options should look like for most people.
 
-7. Copy the token using the "Copy" button.
-
-    - **This is not the Client Secret at the General Information page**
+9. Acquire the token using the "Reset Token" button, then "Copy" after it is revealed.
 
     .. warning::
 
@@ -56,7 +63,7 @@ Continue to the next section to enable privileged intents.
 Enabling Privileged Intents
 -------------------------------
 .. warning::
-    Due to Discord API changes, Red Bot requires all intents.
+    :ref:`Red Bot requires all intents. <intents>`
     \This section is required.
 
 1. Make sure you're logged on to the `Discord website <https://discord.com>`_.
@@ -65,9 +72,9 @@ Enabling Privileged Intents
 4. Navigate to the bot tab on the left side of the screen.
 
     .. image:: /.resources/bot-guide/discord_bot_tab.png
-        :alt: The bot tab in the application page.
+        :alt: The bot tab in the application overview page.
 
-5. Scroll down to the "Privileged Gateway Intents" section, enable both privileged intents and save your changes.
+5. Scroll down to the "Privileged Gateway Intents" section, enable all three privileged intents and save your changes.
 
     .. image:: /.resources/bot-guide/discord_privileged_intents.png
         :alt: The privileged gateway intents selector.
@@ -75,5 +82,6 @@ Enabling Privileged Intents
 .. warning::
 
     Red bots with over 100 servers require `bot verification <https://support.discord.com/hc/en-us/articles/360040720412>`_ which is not covered in this guide.
+    Remember that :ref:`we do not support public bots <intents>`. We encourage you to read that page before scaling up your bot.
 
 *Parts of this guide have been adapted from* `discord.py intro <https://discordpy.readthedocs.io/en/stable/discord.html#discord-intro>`_ *and* `discord.py privileged intents <https://discordpy.readthedocs.io/en/stable/intents.html#privileged-intents>`_.

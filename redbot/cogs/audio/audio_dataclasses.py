@@ -1,6 +1,5 @@
 import contextlib
 import glob
-import logging
 import ntpath
 import os
 import posixpath
@@ -21,6 +20,7 @@ from typing import (
 from urllib.parse import urlparse
 
 import lavalink
+from red_commons.logging import getLogger
 
 from redbot.core.i18n import Translator
 from redbot.core.utils import AsyncIter
@@ -30,7 +30,9 @@ _ = Translator("Audio", Path(__file__))
 _RE_REMOVE_START: Final[Pattern] = re.compile(r"^(sc|list) ")
 _RE_YOUTUBE_TIMESTAMP: Final[Pattern] = re.compile(r"[&|?]t=(\d+)s?")
 _RE_YOUTUBE_INDEX: Final[Pattern] = re.compile(r"&index=(\d+)")
-_RE_SPOTIFY_URL: Final[Pattern] = re.compile(r"(http[s]?://)?(open\.spotify\.com)/")
+_RE_SPOTIFY_URL: Final[Pattern] = re.compile(
+    r"(http[s]?://)?(open\.spotify\.com)/(?:intl-[a-zA-Z-]+/)?"
+)
 _RE_SPOTIFY_TIMESTAMP: Final[Pattern] = re.compile(r"#(\d+):(\d+)")
 _RE_SOUNDCLOUD_TIMESTAMP: Final[Pattern] = re.compile(r"#t=(\d+):(\d+)s?")
 _RE_TWITCH_TIMESTAMP: Final[Pattern] = re.compile(r"\?t=(\d+)h(\d+)m(\d+)s")
@@ -79,7 +81,7 @@ _PARTIALLY_SUPPORTED_VIDEO_EXT: Tuple[str, ...] = (
 _PARTIALLY_SUPPORTED_MUSIC_EXT += _PARTIALLY_SUPPORTED_VIDEO_EXT
 
 
-log = logging.getLogger("red.cogs.Audio.audio_dataclasses")
+log = getLogger("red.cogs.Audio.audio_dataclasses")
 
 
 class LocalPath:
@@ -578,8 +580,6 @@ class Query:
                             returning["single"] = True
                     elif url_domain == "vimeo.com":
                         returning["vimeo"] = True
-                    elif url_domain in ["mixer.com", "beam.pro"]:
-                        returning["mixer"] = True
                     elif url_domain == "twitch.tv":
                         returning["twitch"] = True
                         if "?t=" in track:

@@ -6,10 +6,11 @@ import shutil
 
 import pytest
 
-from redbot.cogs.downloader.repo_manager import RepoManager, Repo, ProcessFormatter
-from redbot.cogs.downloader.installable import Installable, InstalledModule
+from redbot.core._downloader.repo_manager import RepoManager, Repo, ProcessFormatter
+from redbot.core._downloader.installable import Installable, InstalledModule
 
 __all__ = [
+    "GIT_VERSION",
     "repo_manager",
     "repo",
     "bot_repo",
@@ -25,6 +26,17 @@ __all__ = [
     "cloned_git_repo",
     "git_repo_with_remote",
 ]
+
+
+def _get_git_version():
+    """Returns version tuple in format: (major, minor)"""
+    raw_version = sp.check_output(("git", "version"), text=True)[12:]
+    # we're only interested in major and minor version if we will ever need micro
+    # there's more handling needed for versions like `2.25.0-rc1` and `2.25.0.windows.1`
+    return tuple(int(n) for n in raw_version.split(".", maxsplit=3)[:2])
+
+
+GIT_VERSION = _get_git_version()
 
 
 async def fake_run_noprint(*args, **kwargs):
@@ -75,6 +87,7 @@ INFO_JSON = {
     "author": ("tekulvw",),
     "min_bot_version": "3.0.0",
     "max_bot_version": "3.0.2",
+    "min_python_version": [3, 7, 1],
     "description": "A long description",
     "hidden": False,
     "install_msg": "A post-installation message",
@@ -89,6 +102,7 @@ LIBRARY_INFO_JSON = {
     "author": ("seputaes",),
     "min_bot_version": "3.0.0",
     "max_bot_version": "3.0.2",
+    "min_python_version": [3, 7, 1],
     "description": "A long library description",
     "hidden": False,  # libraries are always hidden, this tests it will be flipped
     "install_msg": "A library install message",
@@ -115,8 +129,9 @@ def installed_cog(tmpdir):
     cog_path = tmpdir.mkdir("test_repo").mkdir("test_installed_cog")
     info_path = cog_path.join("info.json")
     info_path.write_text(json.dumps(INFO_JSON), "utf-8")
+    location = Path(str(cog_path))
 
-    cog_info = InstalledModule(Path(str(cog_path)))
+    cog_info = InstalledModule(location, install_location=location)
     return cog_info
 
 
@@ -139,6 +154,7 @@ def _init_test_repo(destination: Path):
     git_dirparams = ("git", "-C", str(destination))
     init_commands = (
         (*git_dirparams, "init"),
+        (*git_dirparams, "checkout", "-b", "master"),
         (*git_dirparams, "config", "--local", "user.name", "Cog-Creators"),
         (*git_dirparams, "config", "--local", "user.email", "cog-creators@example.org"),
         (*git_dirparams, "config", "--local", "commit.gpgSign", "false"),

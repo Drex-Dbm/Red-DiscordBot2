@@ -1,7 +1,7 @@
 .. Publishing cogs for V3
 
-Publishing cogs for Red V3
-==========================
+Publishing cogs for Red
+=======================
 
 Users of Red install 3rd-party cogs using Downloader cog. To make your cog available
 to install for others, you will have to create a git repository
@@ -47,7 +47,7 @@ Keys common to both repo and cog info.json (case sensitive)
   is installed or a repo is added
   
   .. tip:: You can use the ``[p]`` key in your string to use the prefix
-      used for installing.
+      used for installing, and ``[botname]`` to show the bot's username.
 
 - ``short`` (string) - A short description of the cog or repo. For cogs, this info 
   is displayed when a user executes ``[p]cog list``
@@ -86,3 +86,12 @@ Keys specific to the cog info.json (case sensitive)
 
 .. warning::
     Shared libraries are deprecated since version 3.2 and are marked for removal in the future.
+
+Adding to the Index
+-------------------
+
+Repositories that are correctly configured can be added to the `public index of cogs <https://index.discord.red/>`_.
+
+To be added to the index, make a pull request to the `Red-Index repository <https://github.com/Cog-Creators/Red-Index>`_ in the unapproved section. You can learn more about this process in the repository description.
+
+To be added to the approved repositories, first see `guide_cog_creators`.
